@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>🔐 كود التخرج</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #af1ebf;
+      --secondary: #531671;
+      --bg-light: #f3e5f5;
+      --error: #e53935;
+      --success: #43a047;
+      --confidential: #d32f2f;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, var(--bg-light), #ffffff);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .confidential-banner {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      background: var(--confidential);
+      color: #fff;
+      font-weight: bold;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      transform: translateY(-100%);
+      animation: dropIn 0.5s forwards;
+    }
+    @keyframes dropIn { to { transform: translateY(0); } }
+    h2 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+    }
+    .clarification {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+    input {
+      width: 100%; padding: 0.75rem; font-size: 1rem;
+      border: 2px solid #ddd; border-radius: 0.5rem;
+      text-align: center; transition: border-color 0.3s;
+    }
+    input:focus { border-color: var(--primary); outline: none; }
+    .buttons {
+      display: flex; gap: 1rem; margin-top: 1rem;
+    }
+    button {
+      flex: 1; padding: 0.75rem; font-size: 1rem;
+      border: none; border-radius: 0.5rem;
+      color: #fff; cursor: pointer;
+      transition: background 0.3s, transform 0.1s;
+    }
+    button:active { transform: scale(0.97); }
+    #checkBtn        { background: var(--primary); }
+    #checkBtn:hover  { background: #c63fcf; }
+    #hintBtn         { background: var(--secondary); }
+    #hintBtn:hover   { background: #8c1067; }
+    #nextBtn         { background: var(--success); }
+    #nextBtn:hover   { background: #388e3c; }
+    .optionBtn       { background: var(--primary); }
+    .optionBtn:hover { background: #c63fcf; }
+    #finishBtn       { background: var(--secondary); margin-top:1rem; }
+    #finishBtn:hover { background: #8c1067; }
+
+    #msg {
+      margin-top: 1rem; min-height: 1.5rem; font-weight: 700;
+    }
+    #msg.error   { color: var(--error); }
+    #msg.success { color: var(--success); }
+    #hintBox {
+      margin-top: 0.5rem; color: #1565c0; font-size: 0.9rem;
+    }
+    #nextStep {
+      display: none; margin-top: 1.5rem; padding-top: 1rem;
+      border-top: 1px solid #eee;
+    }
+    #question2 {
+      display: none; margin-top: 1rem;
+    }
+    #question2 p {
+      font-size: 1.1rem; margin-bottom: 1rem;
+    }
+    #response2 {
+      margin-top: 1rem; font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="confidential-banner">⚠️ سري للغاية!</div>
+
+    <!-- First Question -->
+    <h2>خمني الشفرة السرية🔐</h2>
+    <p class="clarification">هذا الكود سري لضمان لانه راح يوصلك لهديتك! لحد يعرف عنه!</p> 
+    <input type="number" id="codeInput" placeholder="اكتبي الرقم هنا" autocomplete="off">
+    <div class="buttons">
+      <button id="checkBtn">تحقق</button>
+      <button id="hintBtn">طلب تلميح</button>
+    </div>
+    <div id="msg"></div>
+    <div id="hintBox"></div>
+
+    <!-- Reveal Next -->
+    <div id="nextStep">
+      <div id="nextText">✔️ ممتازه ياممرضتنا!</div>
+      <button id="nextBtn">السؤال التالي</button>
+    </div>
+
+    <!-- Second Question -->
+    <div id="question2">
+      <p>ايش أكثر شي حافظتي عليه طول سنواتك الجامعية؟</p>
+      <div class="buttons">
+        <button class="optionBtn">أ. درجاتي</button>
+        <button class="optionBtn">ب. علاقاتي</button>
+        <button class="optionBtn">ج. أعصابي</button>
+        <button class="optionBtn">د. نفسيتي</button>
+      </div>
+      <div id="response2"></div>
+      <button id="finishBtn" style="display:none;">ودوني لهديتي</button> 
+    </div>
+  </div>
+
+  <script>
+    const correctCode    = 9;
+    const finishLocation = "https://goo.gl/maps/XyZabc123";
+    const codeInput      = document.getElementById('codeInput');
+    const checkBtn       = document.getElementById('checkBtn');
+    const hintBtn        = document.getElementById('hintBtn');
+    const msg            = document.getElementById('msg');
+    const hintBox        = document.getElementById('hintBox');
+    const nextStep       = document.getElementById('nextStep');
+    const nextBtn        = document.getElementById('nextBtn');
+    const question2      = document.getElementById('question2');
+    const optionBtns     = document.querySelectorAll('.optionBtn');
+    const response2      = document.getElementById('response2');
+    const finishBtn      = document.getElementById('finishBtn');
+
+    checkBtn.addEventListener('click', () => {
+      const userCode = parseInt(codeInput.value, 10);
+      msg.className = '';
+      if (userCode === correctCode) {
+        msg.classList.add('success');
+        msg.textContent = "كالعاده مافي حاجه صعبه عليك👏👏";
+        nextStep.style.display = 'block';
+      } else {
+        msg.classList.add('error');
+        msg.textContent = '❌ للأسف، الرقم غير صحيح. حاولي مرة أخرى.';
+        codeInput.select();
+      }
+    });
+
+    hintBtn.addEventListener('click', () => {
+      hintBox.textContent = 'تلميح: الشفرة لها علاقة في سنة تخرجك.';
+      hintBtn.disabled = true;
+    });
+
+    nextBtn.addEventListener('click', () => {
+      nextStep.style.display = 'none';
+      question2.style.display = 'block';
+    });
+
+    optionBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const choice = btn.textContent.trim();
+        if (choice.includes('أعصابي')) {
+          response2.style.color = 'var(--success)';
+          response2.innerHTML = 'حافظتي على اعصابك مع الدراسة بس كانت تطلع علينا احيانا🫣<br>الرحلة من هنا حتكون اطول تقدري تستريحي ورا وجواد يكمل بدالك لانه المشوار طويل وحيكون في اغاني وتصوير💃';  
+          finishBtn.style.display = 'block';
+        } else {
+          response2.style.color = 'var(--error)';
+          response2.textContent = '😒?seriously';
+          finishBtn.style.display = 'none';
+        }
+      });
+    });
+
+    finishBtn.addEventListener('click', () => {
+      window.location.href = finishLocation;
+    });
+  </script>
+</body>
+</html>
