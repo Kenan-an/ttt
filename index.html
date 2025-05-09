@@ -142,7 +142,8 @@
 
     <!-- First Question -->
     <h2>خمني الشفرة السرية🔐</h2>
-    <p class="clarification">ششش! لحد يعرف عن الشفرة لانها سريه وراح توصلك لهديتك الثانية</p> 
+    <p class="clarification">هذا الكود سري لأنه راح يوصلك لهديتك! لحد يعرف عنه!</p>
+    
     <input type="number" id="codeInput" placeholder="اكتبي الرقم هنا" autocomplete="off">
     <div class="buttons">
       <button id="checkBtn">تحقق</button>
@@ -195,7 +196,7 @@
         nextStep.style.display = 'block';
       } else {
         msg.classList.add('error');
-        msg.textContent = '❌ الرقم غير صحيح. حاول مرة أخرى.';
+        msg.textContent = 'انتي اذكى من كذا! جربي مرة ثانية'; 
         codeInput.select();
       }
     });
