@@ -13,106 +13,136 @@
       --success: #43a047;
       --confidential: #d32f2f;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin:0; padding:0; }
     body {
       font-family: 'Tajawal', sans-serif;
       background: linear-gradient(135deg, var(--bg-light), #ffffff);
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .card {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-      position: relative;
+      height: 100vh; display: flex;
+      align-items: center; justify-content: center;
       overflow: hidden;
     }
-    .confidential-banner {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      background: var(--confidential);
-      color: #fff;
-      font-weight: bold;
-      padding: 0.5rem;
-      font-size: 0.9rem;
-      transform: translateY(-100%);
-      animation: dropIn 0.5s forwards;
+    .card {
+      background:#fff; padding:2rem;
+      border-radius:1rem; box-shadow:0 4px 15px rgba(0,0,0,0.1);
+      width:90%; max-width:400px;
+      position:relative; overflow:hidden;
+      text-align:center;
     }
-    @keyframes dropIn { to { transform: translateY(0); } }
+    .confidential-banner {
+      position:absolute; top:0; left:0; right:0;
+      background:var(--confidential); color:#fff;
+      font-weight:bold; padding:0.5rem; font-size:0.9rem;
+      transform:translateY(-100%);
+      animation:dropIn 0.5s forwards;
+    }
+    @keyframes dropIn { to { transform:translateY(0); } }
     h2 {
-      color: var(--primary);
-      margin-bottom: 0.5rem;
-      font-size: 1.5rem;
+      color:var(--primary); margin-bottom:0.5rem;
+      font-size:1.5rem;
     }
     .clarification {
-      color: #666;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-      line-height: 1.4;
+      color:#666; font-size:0.9rem; margin-bottom:1rem;
+      line-height:1.4;
     }
     input {
-      width: 100%; padding: 0.75rem; font-size: 1rem;
-      border: 2px solid #ddd; border-radius: 0.5rem;
-      text-align: center; transition: border-color 0.3s;
+      width:100%; padding:0.75rem; font-size:1rem;
+      border:2px solid #ddd; border-radius:0.5rem;
+      text-align:center; transition:border-color .3s;
     }
-    input:focus { border-color: var(--primary); outline: none; }
+    input:focus { border-color:var(--primary); outline:none; }
     .buttons {
-      display: flex; gap: 1rem; margin-top: 1rem;
+      display:flex; gap:1rem; margin-top:1rem;
     }
     button {
-      flex: 1; padding: 0.75rem; font-size: 1rem;
-      border: none; border-radius: 0.5rem;
-      color: #fff; cursor: pointer;
-      transition: background 0.3s, transform 0.1s;
+      flex:1; padding:.75rem; font-size:1rem;
+      border:none; border-radius:.5rem;
+      color:#fff; cursor:pointer;
+      transition:background .3s,transform .1s;
     }
-    button:active { transform: scale(0.97); }
-    #checkBtn        { background: var(--primary); }
-    #checkBtn:hover  { background: #c63fcf; }
-    #hintBtn         { background: var(--secondary); }
-    #hintBtn:hover   { background: #8c1067; }
-    #nextBtn         { background: var(--success); }
-    #nextBtn:hover   { background: #388e3c; }
-    .optionBtn       { background: var(--primary); }
-    .optionBtn:hover { background: #c63fcf; }
-    #finishBtn       { background: var(--secondary); margin-top:1rem; }
-    #finishBtn:hover { background: #8c1067; }
-
+    button:active { transform:scale(.97); }
+    #checkBtn        { background:var(--primary); }
+    #checkBtn:hover  { background:#c63fcf; }
+    #hintBtn         { background:var(--secondary); }
+    #hintBtn:hover   { background:#8c1067; }
+    #nextBtn         { background:var(--success); }
+    #nextBtn:hover   { background:#388e3c; }
+    .optionBtn       { background:var(--primary); }
+    .optionBtn:hover { background:#c63fcf; }
+    #finishBtn       { background:var(--secondary); margin-top:1rem; }
+    #finishBtn:hover { background:#8c1067; }
     #msg {
-      margin-top: 1rem; min-height: 1.5rem; font-weight: 700;
+      margin-top:1rem; min-height:1.5rem; font-weight:700;
     }
-    #msg.error   { color: var(--error); }
-    #msg.success { color: var(--success); }
+    #msg.error   { color:var(--error); }
+    #msg.success { color:var(--success); }
     #hintBox {
-      margin-top: 0.5rem; color: #1565c0; font-size: 0.9rem;
+      margin-top:.5rem; color:#1565c0; font-size:.9rem;
     }
     #nextStep {
-      display: none; margin-top: 1.5rem; padding-top: 1rem;
-      border-top: 1px solid #eee;
+      display:none; margin-top:1.5rem; padding-top:1rem;
+      border-top:1px solid #eee;
     }
     #question2 {
-      display: none; margin-top: 1rem;
+      display:none; margin-top:1rem;
     }
     #question2 p {
-      font-size: 1.1rem; margin-bottom: 1rem;
+      font-size:1.1rem; margin-bottom:1rem;
     }
-    #response2 {
-      margin-top: 1rem; font-weight: bold;
+    #response2 { margin-top:1rem; font-weight:bold; }
+
+    /* Popup on load */
+    #initialPopup {
+      position: fixed; top:0; left:0; width:100vw; height:100vh;
+      background: rgba(0,0,0,0.7);
+      display:flex; align-items:center; justify-content:center;
+      z-index: 50;
     }
+    .popup-box {
+      background:#fff; padding:2rem;
+      border-radius:1rem; text-align:center;
+      max-width:300px; width:80%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .popup-box p {
+      margin-bottom:1rem; font-size:1.1rem;
+    }
+    .popup-box .choice-btn {
+      margin: .5rem; padding:.5rem 1rem;
+      border:none; border-radius:.5rem;
+      font-size:1rem; cursor:pointer;
+      transition:filter .2s;
+    }
+    .popup-box .like    { background: var(--success); }
+    .popup-box .dislike { background: var(--success); }
+    .popup-box .choice-btn:hover { filter: brightness(1.1); }
   </style>
 </head>
 <body>
+
+  <!-- Initial popup -->
+  <div id="initialPopup">
+    <div class="popup-box">
+        <p>
+            برافو قدرتي تخلصي التحدي الاول.. تستاهلي صفقه👏  
+<br> 
+      نسيبك مع التحدي الثاني... بس دقيقة!
+    </p>
+    <p>عجبتك الهدية؟</p>  
+      <button class="choice-btn like" onclick="document.getElementById('initialPopup').style.display='none'">
+        طبعا
+      </button>
+      <button class="choice-btn dislike" onclick="document.getElementById('initialPopup').style.display='none'">
+        اكيد
+      </button>
+    </div>
+  </div>
+
   <div class="card">
     <div class="confidential-banner">⚠️ سري للغاية!</div>
 
     <!-- First Question -->
     <h2>خمني الشفرة السرية🔐</h2>
-    <p class="clarification">هذا الكود سري لضمان لانه راح يوصلك لهديتك! لحد يعرف عنه!</p> 
+    <p class="clarification">هذا الكود سري لأنه راح يوصلك لهديتك! لحد يعرف عنه!</p>
     <input type="number" id="codeInput" placeholder="اكتبي الرقم هنا" autocomplete="off">
     <div class="buttons">
       <button id="checkBtn">تحقق</button>
@@ -137,7 +167,7 @@
         <button class="optionBtn">د. نفسيتي</button>
       </div>
       <div id="response2"></div>
-      <button id="finishBtn" style="display:none;">ودوني لهديتي</button> 
+      <button id="finishBtn" style="display:none;">ودوني لهديتي</button>
     </div>
   </div>
 
@@ -165,13 +195,13 @@
         nextStep.style.display = 'block';
       } else {
         msg.classList.add('error');
-        msg.textContent = '❌ للأسف، الرقم غير صحيح. حاولي مرة أخرى.';
+        msg.textContent = '❌ الرقم غير صحيح. حاول مرة أخرى.';
         codeInput.select();
       }
     });
 
     hintBtn.addEventListener('click', () => {
-      hintBox.textContent = 'تلميح: الشفرة لها علاقة في سنة تخرجك.';
+        hintBox.textContent = 'همممم... الشفرة لها علاقة بسنة تخرجك'; 
       hintBtn.disabled = true;
     });
 
@@ -185,11 +215,11 @@
         const choice = btn.textContent.trim();
         if (choice.includes('أعصابي')) {
           response2.style.color = 'var(--success)';
-          response2.innerHTML = 'حافظتي على اعصابك مع الدراسة بس كانت تطلع علينا احيانا🫣<br>الرحلة من هنا حتكون اطول تقدري تستريحي ورا وجواد يكمل بدالك لانه المشوار طويل وحيكون في اغاني وتصوير💃';  
+          response2.innerHTML = 'حافظتي على أعصابك مع الدراسة بس كانت تطلع علينا أحيانًا🫣<br>ايش تستني؟ اضغطي على الزر عشان توصلي لهديتك!';   
           finishBtn.style.display = 'block';
         } else {
           response2.style.color = 'var(--error)';
-          response2.textContent = '😒?seriously';
+          response2.textContent = '😒 seriously?';
           finishBtn.style.display = 'none';
         }
       });
