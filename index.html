@@ -12,109 +12,414 @@
       --error: #e53935;
       --success: #43a047;
       --confidential: #d32f2f;
+      --gold: #ffd700;
+      --shadow: rgba(175, 30, 191, 0.2);
     }
-    * { box-sizing: border-box; margin:0; padding:0; }
+    
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+    
     body {
       font-family: 'Tajawal', sans-serif;
-      background: linear-gradient(135deg, var(--bg-light), #ffffff);
-      height: 100vh; display: flex;
-      align-items: center; justify-content: center;
-      overflow: hidden;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      position: relative;
     }
+    
+    /* Animated background elements */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+      animation: float 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
     .card {
-      background:#fff; padding:2rem;
-      border-radius:1rem; box-shadow:0 4px 15px rgba(0,0,0,0.1);
-      width:90%; max-width:400px;
-      position:relative; overflow:hidden;
-      text-align:center;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 2.5rem;
+      border-radius: 2rem;
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 15px 12px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      width: 90%;
+      max-width: 450px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transform: translateY(0);
+      transition: transform 0.3s ease;
     }
+    
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    
     .confidential-banner {
-      position:absolute; top:0; left:0; right:0;
-      background:var(--confidential); color:#fff;
-      font-weight:bold; padding:0.5rem; font-size:0.9rem;
-      transform:translateY(-100%);
-      animation:dropIn 0.5s forwards;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(45deg, var(--confidential), #ff5722);
+      color: #fff;
+      font-weight: bold;
+      padding: 0.75rem;
+      font-size: 0.9rem;
+      transform: translateY(-100%);
+      animation: dropIn 0.8s ease-out forwards;
+      box-shadow: 0 2px 10px rgba(211, 47, 47, 0.3);
     }
-    @keyframes dropIn { to { transform:translateY(0); } }
+    
+    @keyframes dropIn {
+      to { transform: translateY(0); }
+    }
+    
     h2 {
-      color:var(--primary); margin-bottom:0.5rem;
-      font-size:1.5rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(175, 30, 191, 0.2);
+      margin-top: 1rem;
     }
+    
     .clarification {
-      color:#666; font-size:0.9rem; margin-bottom:1rem;
-      line-height:1.4;
+      color: #555;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      background: linear-gradient(135deg, #f8f9ff, #e8f2ff);
+      padding: 1rem;
+      border-radius: 1rem;
+      border-left: 4px solid var(--primary);
     }
+    
     input {
-      width:100%; padding:0.75rem; font-size:1rem;
-      border:2px solid #ddd; border-radius:0.5rem;
-      text-align:center; transition:border-color .3s;
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+      border: 2px solid #e0e7ff;
+      border-radius: 1rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(5px);
     }
-    input:focus { border-color:var(--primary); outline:none; }
+    
+    input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(175, 30, 191, 0.1);
+      transform: scale(1.02);
+    }
+    
     .buttons {
-      display:flex; gap:1rem; margin-top:1rem;
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
     }
+    
     button {
-      flex:1; padding:.75rem; font-size:1rem;
-      border:none; border-radius:.5rem;
-      color:#fff; cursor:pointer;
-      transition:background .3s,transform .1s;
+      flex: 1;
+      padding: 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 1rem;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
-    button:active { transform:scale(.97); }
-    #checkBtn        { background:var(--primary); }
-    #checkBtn:hover  { background:#c63fcf; }
-    #hintBtn         { background:var(--secondary); }
-    #hintBtn:hover   { background:#8c1067; }
-    #nextBtn         { background:var(--success); }
-    #nextBtn:hover   { background:#388e3c; }
-    .optionBtn       { background:var(--primary); }
-    .optionBtn:hover { background:#c63fcf; }
-    #finishBtn       { background:var(--secondary); margin-top:1rem; }
-    #finishBtn:hover { background:#8c1067; }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    button:hover::before {
+      left: 100%;
+    }
+    
+    button:active {
+      transform: scale(0.98);
+    }
+    
+    #checkBtn {
+      background: linear-gradient(135deg, var(--primary), #c63fcf);
+    }
+    
+    #checkBtn:hover {
+      background: linear-gradient(135deg, #c63fcf, var(--primary));
+      box-shadow: 0 6px 20px rgba(175, 30, 191, 0.4);
+    }
+    
+    #hintBtn {
+      background: linear-gradient(135deg, var(--secondary), #8c1067);
+    }
+    
+    #hintBtn:hover {
+      background: linear-gradient(135deg, #8c1067, var(--secondary));
+      box-shadow: 0 6px 20px rgba(83, 22, 113, 0.4);
+    }
+    
+    #nextBtn {
+      background: linear-gradient(135deg, var(--success), #388e3c);
+    }
+    
+    #nextBtn:hover {
+      background: linear-gradient(135deg, #388e3c, var(--success));
+      box-shadow: 0 6px 20px rgba(67, 160, 71, 0.4);
+    }
+    
+    .optionBtn {
+      background: linear-gradient(135deg, var(--primary), #c63fcf);
+      margin: 0.5rem 0;
+      font-size: 0.95rem;
+    }
+    
+    .optionBtn:hover {
+      background: linear-gradient(135deg, #c63fcf, var(--primary));
+      box-shadow: 0 6px 20px rgba(175, 30, 191, 0.4);
+    }
+    
+    #finishBtn {
+      background: linear-gradient(135deg, var(--gold), #ffb300);
+      color: #333;
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      padding: 1.2rem;
+      animation: pulse 2s infinite;
+    }
+    
+    #finishBtn:hover {
+      background: linear-gradient(135deg, #ffb300, var(--gold));
+      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    #nextWebBtn {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      padding: 1.2rem;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    
+    #nextWebBtn:hover {
+      background: linear-gradient(135deg, #45a049, #4CAF50);
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
+    }
+    
+    @keyframes glow {
+      from { box-shadow: 0 0 10px rgba(76, 175, 80, 0.5); }
+      to { box-shadow: 0 0 20px rgba(76, 175, 80, 0.8); }
+    }
+    
     #msg {
-      margin-top:1rem; min-height:1.5rem; font-weight:700;
+      margin-top: 1.5rem;
+      min-height: 1.5rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 1rem;
+      border-radius: 1rem;
+      transition: all 0.3s ease;
     }
-    #msg.error   { color:var(--error); }
-    #msg.success { color:var(--success); }
+    
+    #msg.error {
+      color: var(--error);
+      background: rgba(229, 57, 53, 0.1);
+      border: 1px solid rgba(229, 57, 53, 0.2);
+    }
+    
+    #msg.success {
+      color: var(--success);
+      background: rgba(67, 160, 71, 0.1);
+      border: 1px solid rgba(67, 160, 71, 0.2);
+    }
+    
     #hintBox {
-      margin-top:.5rem; color:#1565c0; font-size:.9rem;
+      margin-top: 1rem;
+      color: #1565c0;
+      font-size: 0.95rem;
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      padding: 1rem;
+      border-radius: 1rem;
+      border-left: 4px solid #1565c0;
+      animation: fadeIn 0.5s ease-out;
     }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
     #nextStep {
-      display:none; margin-top:1.5rem; padding-top:1rem;
-      border-top:1px solid #eee;
+      display: none;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid rgba(175, 30, 191, 0.2);
+      animation: slideUp 0.5s ease-out;
     }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    #nextText {
+      font-size: 1.2rem;
+      color: var(--success);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    
     #question2 {
-      display:none; margin-top:1rem;
+      display: none;
+      margin-top: 1.5rem;
+      animation: slideUp 0.5s ease-out;
     }
+    
     #question2 p {
-      font-size:1.1rem; margin-bottom:1rem;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: #333;
+      font-weight: 600;
+      background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      border-left: 4px solid var(--gold);
     }
-    #response2 { margin-top:1rem; font-weight:bold; }
-
-    /* Popup on load */
+    
+    #response2 {
+      margin-top: 1.5rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      line-height: 1.6;
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    /* Popup styling */
     #initialPopup {
-      position: fixed; top:0; left:0; width:100vw; height:100vh;
-      background: rgba(0,0,0,0.7);
-      display:flex; align-items:center; justify-content:center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       z-index: 50;
+      animation: fadeIn 0.3s ease-out;
     }
+    
     .popup-box {
-      background:#fff; padding:2rem;
-      border-radius:1rem; text-align:center;
-      max-width:300px; width:80%;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      background: linear-gradient(135deg, #fff, #f8f9ff);
+      padding: 2.5rem;
+      border-radius: 2rem;
+      text-align: center;
+      max-width: 350px;
+      width: 85%;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: popIn 0.5s ease-out;
     }
+    
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    
     .popup-box p {
-      margin-bottom:1rem; font-size:1.1rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+      color: #333;
+      line-height: 1.6;
     }
+    
     .popup-box .choice-btn {
-      margin: .5rem; padding:.5rem 1rem;
-      border:none; border-radius:.5rem;
-      font-size:1rem; cursor:pointer;
-      transition:filter .2s;
+      margin: 0.5rem;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 1rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
-    .popup-box .like    { background: var(--success); }
-    .popup-box .dislike { background: var(--success); }
-    .popup-box .choice-btn:hover { filter: brightness(1.1); }
+    
+    .popup-box .like,
+    .popup-box .dislike {
+      background: linear-gradient(135deg, var(--success), #388e3c);
+      color: white;
+    }
+    
+    .popup-box .choice-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(67, 160, 71, 0.4);
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .card {
+        width: 95%;
+        padding: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .buttons {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      
+      button {
+        padding: 0.8rem;
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -142,7 +447,7 @@
 
     <!-- First Question -->
     <h2>خمني الشفرة السرية🔐</h2>
-    <p class="clarification">ششششش هذا الكود سري لأنه راح يوصلك لهديتك! لحد يعرف عنه!</p>
+    <p class="clarification">هذا الكود سري! لحد يعرف عنه!</p>
     
     <input type="number" id="codeInput" placeholder="اكتبي الرقم هنا" autocomplete="off">
     <div class="buttons">
@@ -168,13 +473,15 @@
         <button class="optionBtn">د. نفسيتي</button>
       </div>
       <div id="response2"></div>
-      <button id="finishBtn" style="display:none;">هدية؟ ياسلام</button>
+      <button id="finishBtn" style="display:none;">واو هديه؟ وريني</button>
+      <!-- <button id="nextWebBtn" style="display:none;">التحدي اللي بعدووو</button> -->
     </div>
   </div>
 
   <script>
     const correctCode    = 9;
     const finishLocation = "https://kenan-an.github.io/t/";
+    const nextWebLocation = "https://kenan-an.github.io/t/"; // Replace with actual URL
     const codeInput      = document.getElementById('codeInput');
     const checkBtn       = document.getElementById('checkBtn');
     const hintBtn        = document.getElementById('hintBtn');
@@ -186,6 +493,7 @@
     const optionBtns     = document.querySelectorAll('.optionBtn');
     const response2      = document.getElementById('response2');
     const finishBtn      = document.getElementById('finishBtn');
+    const nextWebBtn     = document.getElementById('nextWebBtn');
 
     checkBtn.addEventListener('click', () => {
       const userCode = parseInt(codeInput.value, 10);
@@ -204,6 +512,7 @@
     hintBtn.addEventListener('click', () => {
         hintBox.textContent = 'همممم... الشفرة لها علاقة بسنة تخرجك'; 
       hintBtn.disabled = true;
+      hintBtn.style.opacity = '0.6';
     });
 
     nextBtn.addEventListener('click', () => {
@@ -216,18 +525,37 @@
         const choice = btn.textContent.trim();
         if (choice.includes('أعصابي')) {
           response2.style.color = 'var(--success)';
+          response2.style.background = 'rgba(67, 160, 71, 0.1)';
+          response2.style.border = '1px solid rgba(67, 160, 71, 0.2)';
           response2.innerHTML = 'حافظتي على أعصابك مع الدراسة بس كانت تطلع علينا أحيانًا🫣<br>ايش تستني؟ اضغطي على الزر عشان تاخذي هديتك!';   
           finishBtn.style.display = 'block';
+          setTimeout(() => {
+            nextWebBtn.style.display = 'block';
+          }, 1000);
         } else {
           response2.style.color = 'var(--error)';
+          response2.style.background = 'rgba(229, 57, 53, 0.1)';
+          response2.style.border = '1px solid rgba(229, 57, 53, 0.2)';
           response2.textContent = '😒 seriously?';
           finishBtn.style.display = 'none';
+          nextWebBtn.style.display = 'none';
         }
       });
     });
 
     finishBtn.addEventListener('click', () => {
       window.location.href = finishLocation;
+    });
+
+    nextWebBtn.addEventListener('click', () => {
+      window.location.href = nextWebLocation;
+    });
+
+    // Enter key support for input
+    codeInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        checkBtn.click();
+      }
     });
   </script>
 </body>
